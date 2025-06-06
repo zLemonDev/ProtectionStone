@@ -1,0 +1,52 @@
+{
+	"format_version": 2,
+	"metadata": {
+		"authors": [
+			"LemoNisGamer"
+		],
+		"generated_with": {
+			"bridge": [
+				"2.7.46"
+			],
+			"dash": [
+				"0.11.7"
+			]
+		}
+	},
+	"header": {
+		"name": "Protection+",
+		"description": "add protect to your world",
+		"min_engine_version": [
+			1,
+			21,
+			80
+		],
+		"uuid": "1e80e240-3953-48a8-94bc-4ceb1b89a23d",
+		"version": [
+			1,
+			0,
+			0
+		]
+	},
+	"modules": [
+		{
+			"type": "resources",
+			"uuid": "73aa5f39-9b83-4e6d-b99f-d9f4c6920f86",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	],
+	"dependencies": [
+		{
+			"uuid": "864257de-ab25-49df-aa55-4bedcc54fa1b",
+			"version": [
+				1,
+				0,
+				0
+			]
+		}
+	]
+}
