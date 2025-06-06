@@ -32,8 +32,8 @@ interface ProtectionArea {
     isPermanent: boolean;
     stoneId?: string;
     showParticles: boolean;
-    members: string[]; // Array of player IDs who are members
-    pvpEnabled: boolean; // Toggle for PvP in the area
+    members: string[];
+    pvpEnabled: boolean;
     explosionsEnabled: boolean;
 }
 
@@ -101,7 +101,6 @@ function initializeDynamicProperties(): void {
             systemConfig = JSON.parse(configStr);
         }
     } catch (error) {
-        // Logging removed
     }
 }
 
@@ -116,7 +115,6 @@ function saveProtectionStones(): void {
         systemConfig.totalStonesPlaced = stonesData.length;
         world.setDynamicProperty(SYSTEM_CONFIG_KEY, JSON.stringify(systemConfig));
     } catch (error) {
-        // Logging removed
     }
 }
 
@@ -131,7 +129,6 @@ function loadProtectionStones(): void {
             }
         }
     } catch (error) {
-        // Logging removed
     }
 }
 
@@ -146,7 +143,6 @@ function saveProtectionAreas(): void {
         systemConfig.totalAreasCreated = areasData.length;
         world.setDynamicProperty(SYSTEM_CONFIG_KEY, JSON.stringify(systemConfig));
     } catch (error) {
-        // Logging removed
     }
 }
 
@@ -166,7 +162,7 @@ function loadProtectionAreas(): void {
             }
         }
     } catch (error) {
-        // Logging removed
+
     }
 }
 
@@ -178,7 +174,7 @@ function savePlayerProtectionData(): void {
         }
         world.setDynamicProperty(PLAYER_DATA_KEY, JSON.stringify(playerDataObj));
     } catch (error) {
-        // Logging removed
+
     }
 }
 
@@ -193,7 +189,7 @@ function loadPlayerProtectionData(): void {
             }
         }
     } catch (error) {
-        // Logging removed
+
     }
 }
 
@@ -204,7 +200,7 @@ function generateAreaId(): string {
         world.setDynamicProperty(NEXT_AREA_ID_KEY, nextId + 1);
         return areaId;
     } catch (error) {
-        // Logging removed
+
         return `area_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
     }
 }
@@ -226,7 +222,7 @@ function getDimensionById(dimensionId: string): Dimension | null {
                 return world.getDimension('overworld');
         }
     } catch (error) {
-        // Logging removed
+
         return world.getDimension('overworld');
     }
 }
@@ -568,7 +564,7 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
                     saveProtectionAreas();
                     savePlayerProtectionData();
                 } catch (saveError) {
-                    // Logging removed
+            
                 }
                 player.sendMessage('§cพื้นที่ป้องกันและหินป้องกันถูกยกเลิกแล้ว!');
                 player.sendMessage('§aการเปลี่ยนแปลงถูกบันทึกแล้ว!');
@@ -579,11 +575,11 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
                         const protectionBlock = BlockPermutation.resolve(PROTECTION_BLOCK);
                         block.setPermutation(protectionBlock);
                     } catch (error) {
-                        // Logging removed
+                
                         try {
                             block.setType(PROTECTION_BLOCK);
                         } catch (fallbackError) {
-                            // Logging removed
+                    
                         }
                     }
                 }, 1);
@@ -609,12 +605,12 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
                         try {
                             block.setType(PROTECTION_BLOCK);
                         } catch (error) {
-                            // Logging removed
+                    
                         }
                     }, 1);
                 }
             } else {
-                // Logging removed
+        
             }
         }
     } else {
@@ -626,7 +622,7 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
                 try {
                     block.setPermutation(brokenBlockPermutation);
                 } catch (error) {
-                    // Logging removed
+            
                 }
             }, 1);
         }
@@ -652,7 +648,7 @@ function showProtectionParticles(center: Vector3, dimension: Dimension): void {
         try {
             dimension.spawnParticle(PARTICLE_TYPE, pos);
         } catch (error) {
-            // Logging removed
+    
         }
     });
 }
@@ -669,7 +665,7 @@ function showProtectionOutline(center: Vector3, dimension: Dimension): void {
             try {
                 dimension.spawnParticle(PARTICLE_TYPE, edge);
             } catch (error) {
-                // Logging removed
+        
             }
         });
     }
@@ -959,14 +955,14 @@ function updatePlayerTerritoryActionbar(player: Player, currentTick: number): vo
                 player.onScreenDisplay.setActionBar(message);
                 playerState.lastNotificationTick = currentTick;
             } catch (error) {
-                // Logging removed
+        
             }
         }
     } else if (justLeft) {
         try {
             player.onScreenDisplay.setActionBar('');
         } catch (error) {
-            // Logging removed
+    
         }
     }
 }
@@ -985,7 +981,7 @@ system.runInterval(() => {
                     owner.sendMessage(`§aการเปลี่ยนแปลงถูกบันทูลอัตโนมัติ`);
                 }
             } catch (error) {
-                // Logging removed
+        
             }
             if (area.stoneId) {
                 const stoneIndex = activeProtectionStones.findIndex(s => s.id === area.stoneId);
@@ -1005,7 +1001,7 @@ system.runInterval(() => {
                     showProtectionOutline(area.center, dimension);
                 }
             } catch (error) {
-                // Logging removed
+        
             }
         }
         if (!area.isPermanent) {
@@ -1024,7 +1020,7 @@ system.runInterval(() => {
             updatePlayerTerritoryActionbar(player, currentTick);
         }
     } catch (error) {
-        // Logging removed
+
     }
 }, 1);
 
@@ -1063,7 +1059,7 @@ world.afterEvents.itemUse.subscribe((event) => {
                 }
             }
         } catch (error) {
-            // Logging removed
+    
         }
         const playerPos = player.location;
         const blockBelow: Vector3 = {
@@ -1110,7 +1106,7 @@ system.runInterval(() => {
                     owner.sendMessage(`§aการเปลี่ยนแปลงถูกบันทูลอัตโนมัติ`);
                 }
             } catch (error) {
-                // Logging removed
+        
             }
             if (area.stoneId) {
                 const stoneIndex = activeProtectionStones.findIndex(s => s.id === area.stoneId);
@@ -1130,7 +1126,7 @@ system.runInterval(() => {
                     showProtectionOutline(area.center, dimension);
                 }
             } catch (error) {
-                // Logging removed
+        
             }
         }
         if (!area.isPermanent) {
@@ -1149,7 +1145,7 @@ system.runInterval(() => {
             updatePlayerTerritoryActionbar(player, currentTick);
         }
     } catch (error) {
-        // Logging removed
+
     }
 }, 1);
 
@@ -1170,7 +1166,7 @@ export function debugShowParticles(area: ProtectionArea): void {
             showProtectionOutline(area.center, dimension);
         }
     } catch (error) {
-        // Logging removed
+
     }
 }
 
